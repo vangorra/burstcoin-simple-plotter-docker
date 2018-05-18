@@ -9,8 +9,8 @@ usage: simple_plot --directory <directory> --size <size> --account <account> /di
   --size         Size of the plot. (eg 1G, 2.3T, etc) (required)
   --account      Account number. (Default: The account number from the previous plot)
   --threads      The number of threads to use. (Default: $DEFAULT_THREAD_COUNT)
-  --nonce        Start nonce. (Default: 0 or last place left off on provided plots)
-  --source       Source directory with other plots.
+  --start-nonce  Start nonce. (Default: 0 or last place left off on provided plots)
+  --source       Source directory with other plots. (multiple allowed)
 EOF
 }
 
@@ -51,7 +51,7 @@ do
       shift
       shift
     ;;
-    --nonce)
+    --start-nonce)
       NONCE_START="$2"
       shift
       shift
