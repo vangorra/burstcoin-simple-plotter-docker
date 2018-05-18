@@ -173,10 +173,42 @@ if [[ -n "$LAST_PLOT_FILE" ]]; then
   echo "Latest plot file: '$LAST_PLOT_FILE'."
 fi
 
+PROGRESS_START_TIME=$(date +"%s")
+PROGRESS_LAST_PRINT_TIME="$PROGRESS_START_TIME"
+PROGRESS_FIRST_PRINT_TIME="$(($PROGRESS_START_TIME+5))"
+function printProgress() {
+  while read LINE
+  do
+    CURRENT_TIME=$(date +"%s")
+    if [[ "$(($CURRENT_TIME-$PROGRESS_LAST_PRINT_TIME))" -lt "1" ]]; then
+      echo "$LINE"
+      continue
+    fi
+    PROGRESS_LAST_PRINT_TIME="$CURRENT_TIME"
+
+    echo "$LINE"
+    if [[ "$CURRENT_TIME" -gt "$PROGRESS_FIRST_PRINT_TIME" ]]; then
+      DURATION="$(($CURRENT_TIME-$PROGRESS_START_TIME))"
+      PROGRESS_NONCE_INDEX=$(echo "$LINE" | cut -d ' ' -f2)
+      PROGRESS_NONCE_TOTAL=$(echo "$LINE" | cut -d ' ' -f4)
+      PROGRESS_NONCE_REMAIN="$(($PROGRESS_NONCE_TOTAL-$PROGRESS_NONCE_INDEX))"
+      PROGRESS_RATE="$(($PROGRESS_NONCE_INDEX/$DURATION))"
+      REMAINING="$(($PROGRESS_NONCE_REMAIN/$PROGRESS_RATE))"
+
+      printf 'Duration: [%dd:%02dh:%02dm:%02ds] ' $(($DURATION/86400)) $(($DURATION%86400/3600)) $(($DURATION%3600/60)) $(($DURATION%60))
+      printf 'Remaining: [%dd:%02dh:%02dm:%02ds]\n' $(($REMAINING/86400)) $(($REMAINING%86400/3600)) $(($REMAINING%3600/60)) $(($REMAINING%60))
+    else
+      echo "Duration: [collecting data] Remaining: [collecting data]"
+    fi
+  done
+}
+
 plot64 -k "$ACCOUNT_NUMBER" \
   -x 1 \
   -d "$OUTPUT_DIR" \
   -s "$NONCE_START" \
   -n "$NONCE_COUNT" \
   -t "$THREAD_COUNT" \
-  -v
+  -v 2>&1 | printProgress
+
+exit "$?"
