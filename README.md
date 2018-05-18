@@ -1,4 +1,5 @@
 # burstcoin-simple-plotter-docker
+At last a burstcoin plotter fit for a human. Accepts simple arguments and will find or calculate the rest.
 
 ## Quickstart
 ```
