@@ -4,7 +4,7 @@ DEFAULT_THREAD_COUNT=$(grep -c processor /proc/cpuinfo)
 
 function showUsage() {
   cat << EOF
-usage: simple_plot --directory <directory> --size <size> --account <account> /dir/to/plots /dir2/to/plots /dir3/to/plots
+usage: simple_plot.sh --directory <directory> --size <size> --account <account> /dir/to/plots /dir2/to/plots /dir3/to/plots
   --directory    The destination to write the plot. (required)
   --size         Size of the plot. (eg 1G, 2.3T, etc) (required)
   --account      Account number. (Default: The account number from the previous plot)
