@@ -28,6 +28,7 @@ docker run \
 - Automatically calulates the start nonce based on previous plot files.
 - Generates a pre-optimized plot file.
 - Automatic calculation of number of thread to use. It will use the number cpus listed in /proc/cpuinfo
+- Output of plot duration and stimated time to completion.
 
 ## Command line arguments
 ```
