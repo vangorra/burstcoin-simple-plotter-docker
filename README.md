@@ -1,5 +1,7 @@
 # burstcoin-simple-plotter-docker
-At last a burstcoin plotter fit for a human. Accepts simple arguments and will find or calculate the rest.
+At last a burstcoin plotter fit for a human. Accepts simple arguments and will find or calculate the rest. This docker image uses the PoC Consortum's optimized burstcoin miner.
+
+https://github.com/PoC-Consortium/cg_obup
 
 ## Quickstart
 ```
