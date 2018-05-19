@@ -191,6 +191,10 @@ function printProgress() {
     PROGRESS_LAST_PRINT_TIME="$CURRENT_TIME"
 
     echo "$LINE"
+    if [[ $(echo "$LINE" | grep -ciE '^Nonces [0-9]+ from [0-9]+ .*') -eq "0" ]]; then
+      continue
+    fi
+
     if [[ "$CURRENT_TIME" -gt "$PROGRESS_FIRST_PRINT_TIME" ]]; then
       DURATION=$(expr "$CURRENT_TIME" "-" "$PROGRESS_START_TIME")
       PROGRESS_NONCE_INDEX=$(echo "$LINE" | cut -d ' ' -f2)
